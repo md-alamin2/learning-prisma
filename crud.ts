@@ -25,15 +25,34 @@ async function run() {
   //     },
   //   });
   //   console.log("Profile created successfully: ", createProfile);
-  
+
   //retrieve all user
-  const users = await prisma.user.findMany({
-    include: {
-      posts: true,
-      profiles: true,
+  //   const users = await prisma.user.findMany({
+  //     include: {
+  //       posts: true,
+  //       profiles: true,
+  //     },
+  //   });
+  //   console.dir(users, { depth: Infinity });
+
+  // update profile
+  const updateUser = await prisma.profile.update({
+    where: { userId: 1 },
+    data: {
+      dateOfBirth: "2005-10-10T06:29:34.049Z",
     },
+    select:{
+        id: true,
+        bio: true,
+        user: {
+            select:{
+                name: true,
+                email: true
+            }
+        }
+    }
   });
-  console.dir(users, { depth: Infinity });
+  console.log(updateUser);
 }
 
 run();
