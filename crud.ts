@@ -36,23 +36,28 @@ async function run() {
   //   console.dir(users, { depth: Infinity });
 
   // update profile
-  const updateUser = await prisma.profile.update({
-    where: { userId: 1 },
-    data: {
-      dateOfBirth: "2005-10-10T06:29:34.049Z",
-    },
-    select:{
-        id: true,
-        bio: true,
-        user: {
-            select:{
-                name: true,
-                email: true
-            }
-        }
-    }
+  //   const updateUser = await prisma.profile.update({
+  //     where: { userId: 1 },
+  //     data: {
+  //       dateOfBirth: "2005-10-10T06:29:34.049Z",
+  //     },
+  //     select:{
+  //         id: true,
+  //         bio: true,
+  //         user: {
+  //             select:{
+  //                 name: true,
+  //                 email: true
+  //             }
+  //         }
+  //     }
+  //   });
+  //   console.log(updateUser);
+  // delete user
+  const deleteUser = await prisma.user.delete({
+    where: { id: 2 },
   });
-  console.log(updateUser);
+  console.log(deleteUser)
 }
 
 run();
