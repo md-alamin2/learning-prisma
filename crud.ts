@@ -9,7 +9,6 @@ async function run() {
   //     },
   //   });
   //   console.log('User created successfully: ', createUser)
-
   // create post for userId = 1
   // const createPost = await prisma.post.create({
   //     data:{
@@ -18,15 +17,23 @@ async function run() {
   //     }
   // })
   // console.log("Post created successfully: ", createPost)
-
   //   create profile
-  const createProfile = await prisma.profile.create({
-    data: {
-      bio: "Full-stack web developer",
-      userId: 1,
+  //   const createProfile = await prisma.profile.create({
+  //     data: {
+  //       bio: "Full-stack web developer",
+  //       userId: 1,
+  //     },
+  //   });
+  //   console.log("Profile created successfully: ", createProfile);
+  
+  //retrieve all user
+  const users = await prisma.user.findMany({
+    include: {
+      posts: true,
+      profiles: true,
     },
   });
-  console.log("Profile created successfully: ", createProfile);
+  console.dir(users, { depth: Infinity });
 }
 
 run();
