@@ -22,5 +22,16 @@
     "@prisma/client": "^7.10.1",
     "dotenv": "^18.0.8",
     "pg": "^8.23.1"
-  }
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/md-alamin2/learning-prisma.git"
+  },
+  "bugs": {
+    "url": "https://github.com/md-alamin2/learning-prisma/issues"
+  },
+  "homepage": "https://github.com/md-alamin2/learning-prisma#readme"
 }

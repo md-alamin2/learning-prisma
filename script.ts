@@ -10,7 +10,7 @@ async function main() {
         create: {
           title: "Hello World",
           content: "This is my first post!",
-          published: true,
+          isPublished: true, // Correct field name
         },
       },
     },
