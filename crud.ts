@@ -2,60 +2,96 @@ import { prisma } from "./lib/prisma";
 
 async function run() {
   // create user
-  //   const createUser = await prisma.user.create({
-  //     data: {
-  //       name: "Habib",
-  //       email: "habib@gmail.com",
-  //     },
-  //   });
-  //   console.log('User created successfully: ', createUser)
+  const createUser = await prisma.user.create({
+    data: {
+      name: "Habib",
+      email: "habib@gmail.com",
+    },
+  });
+  console.log("User created successfully: ", createUser);
+
+  // create multiple user
+  const createMultipleUser = await prisma.user.createMany({
+    data: [
+      { name: "Habib", email: "habib@gmail.com" },
+      { name: "Alo", email: "alo@prisma.com" },
+    ],
+    skipDuplicates: true,
+  });
+  console.log(createMultipleUser);
+
+  // create user with return
+  const createMultipleUserWithReturn = await prisma.user.createManyAndReturn({
+    data: [
+      { name: "Sanower", email: "sanower@gmail.com" },
+      { name: "Shakib", email: "shakib@prisma.com" },
+    ],
+  });
+  console.log(createMultipleUserWithReturn);
+
   // create post for userId = 1
-  // const createPost = await prisma.post.create({
-  //     data:{
-  //         title: "This is a sunny day",
-  //         authorId: 1
-  //     }
-  // })
-  // console.log("Post created successfully: ", createPost)
+  const createPost = await prisma.post.create({
+    data: {
+      title: "This is a sunny day",
+      authorId: 1,
+    },
+  });
+  console.log("Post created successfully: ", createPost);
+
   //   create profile
-  //   const createProfile = await prisma.profile.create({
-  //     data: {
-  //       bio: "Full-stack web developer",
-  //       userId: 1,
-  //     },
-  //   });
-  //   console.log("Profile created successfully: ", createProfile);
+  const createProfile = await prisma.profile.create({
+    data: {
+      bio: "Full-stack web developer",
+      userId: 1,
+    },
+  });
+  console.log("Profile created successfully: ", createProfile);
+
   //retrieve all user
-  //   const users = await prisma.user.findMany({
-  //     include: {
-  //       posts: true,
-  //       profiles: true,
-  //     },
-  //   });
-  //   console.dir(users, { depth: Infinity });
+  const users = await prisma.user.findMany({
+    include: {
+      posts: true,
+      profiles: true,
+    },
+  });
+  console.dir(users, { depth: Infinity });
+
+  // retrieve user by id
+  const getUserById = await prisma.user.findUnique({
+    where: { id: 37 },
+  });
+  console.log(getUserById);
+
+  // retrieve users whose email ends with .com
+  const usersWithEmail = await prisma.user.findMany({
+    where: { email: { endsWith: ".com" } },
+  });
+  console.log(usersWithEmail);
+
   // update profile
-  //   const updateUser = await prisma.profile.update({
-  //     where: { userId: 1 },
-  //     data: {
-  //       dateOfBirth: "2005-10-10T06:29:34.049Z",
-  //     },
-  //     select:{
-  //         id: true,
-  //         bio: true,
-  //         user: {
-  //             select:{
-  //                 name: true,
-  //                 email: true
-  //             }
-  //         }
-  //     }
-  //   });
-  //   console.log(updateUser);
+  const updateUser = await prisma.profile.update({
+    where: { userId: 1 },
+    data: {
+      dateOfBirth: "2005-10-10T06:29:34.049Z",
+    },
+    select: {
+      id: true,
+      bio: true,
+      user: {
+        select: {
+          name: true,
+          email: true,
+        },
+      },
+    },
+  });
+  console.log(updateUser);
+
   // delete user
-  //   const deleteUser = await prisma.user.delete({
-  //     where: { id: 2 },
-  //   });
-  //   console.log(deleteUser)
+  const deleteUser = await prisma.user.delete({
+    where: { id: 2 },
+  });
+  console.log(deleteUser);
 
   //   using upsert
   const upsertUser = await prisma.user.upsert({
@@ -70,7 +106,7 @@ async function run() {
       email: "al-amin@prisma.io",
     },
   });
-  console.log(upsertUser)
+  console.log(upsertUser);
 }
 
 run();
